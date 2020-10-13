@@ -63,7 +63,6 @@ export default class Phonebook extends React.Component {
         );
     }
     componentDidMount() {
-        console.log("mount");
         this.readContactsFromLocalStorage();
     }
     componentDidUpdate() {
