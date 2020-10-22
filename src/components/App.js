@@ -71,7 +71,9 @@ export default class Phonebook extends React.Component {
     readContactsFromLocalStorage() {
         const contactsString = localStorage.getItem("contacts");
         const contactsObj = JSON.parse(contactsString);
-        this.setState({ contacts: contactsObj });
+        if (contactsObj) {
+            this.setState({ contacts: contactsObj });
+        }
     }
     setContactsToLocalStorage() {
         localStorage.setItem("contacts", JSON.stringify(this.state.contacts));
