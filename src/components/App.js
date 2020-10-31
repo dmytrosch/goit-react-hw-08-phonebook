@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import ContactForm from "./ContactForm";
 import Filter from "./Filter";
 import ContactList from "./ContactList";
+import styles from './App.module.css'
 
 export default class Phonebook extends React.Component {
     state = {
@@ -81,10 +82,10 @@ export default class Phonebook extends React.Component {
     render() {
         const { contacts, filter } = this.state;
         return (
-            <section>
-                <h1>Phonebook</h1>
+            <section className={styles.container}>
+                <h1 className={styles.title}>Phonebook</h1>
                 <ContactForm handler={this.submitFormHandler} />
-                <h2>Contacts</h2>
+                <h2 className={styles.contacts}>Contacts</h2>
                 <Filter searchHandler={this.searchInputHandler} />
                 <ContactList
                     contacts={filter ? this.findContact() : contacts}
