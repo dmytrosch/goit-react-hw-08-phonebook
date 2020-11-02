@@ -11,11 +11,13 @@
     display: flex;
     justify-content: space-between;
 }
+
 .item > span{
-    margin-right: 50px;
+    width: 40%;
     font-weight: 300;
     font-size: 15px;
 }
+
 .button{
     border-radius: 8px;
     background-color:red;
@@ -27,6 +29,7 @@
     transition: all 0.25s ease-in-out;
     border: 1px solid transparent;
 }
+
 .button:hover{
     background-color: transparent;
     color: red;

@@ -11,7 +11,7 @@ export default function ContactForm(props) {
             </label>
             <label className={styles.label}>
                 Number <br/>
-                <input type="tel" id='phone' name="numberInput" className={styles.input}/>
+                <input type="tel" id='phone' name="numberInput" className={styles.input} autoComplete='off'/>
             </label>
             <button type="submit" className={styles.submit}>Add contact</button>
         </form>
