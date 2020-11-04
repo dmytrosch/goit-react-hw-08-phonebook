@@ -1,12 +1,8 @@
-import { SET_ALERT } from "./alertActionsTypes";
+import { createReducer } from "@reduxjs/toolkit";
+import alertActions from "./alertActions";
 
-const alertReducer = (state = "", { payload, type }) => {
-    switch (type) {
-        case SET_ALERT:
-            return payload.text;
-        default:
-            return state;
-    }
-};
+const alertReducer = createReducer("", {
+    [alertActions.alert]: (_, action) => action.payload,
+});
 
 export default alertReducer;

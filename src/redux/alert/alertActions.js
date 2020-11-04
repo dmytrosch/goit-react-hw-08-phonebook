@@ -1,10 +1,5 @@
-import { SET_ALERT } from "./alertActionsTypes";
+import { createAction } from "@reduxjs/toolkit";
 
-const alert = (text) => ({
-    type: SET_ALERT,
-    payload: {
-        text,
-    },
-});
+const alert = createAction("alert/set");
 
 export default { alert };
