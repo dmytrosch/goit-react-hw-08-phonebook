@@ -2,13 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import styles from "./ContactForm.module.css";
 import contactsActions from "../redux/contacts/contactsActions";
+import alertActions from "../redux/alert/alertActions";
 import { connect } from "react-redux";
 import formStyles from "./ContactForm.module.css";
 
 class ContactForm extends React.Component {
-    state = {
-        alert: "",
-    };
     submitFormHandler = (event) => {
         event.preventDefault();
         const el = event.target.elements;
@@ -19,17 +17,17 @@ class ContactForm extends React.Component {
             this.makeAlert("Enter name!");
             return;
         }
+        nameInput.classList.remove(formStyles.inputWrong);
         if (!numberInput.value) {
             numberInput.classList.add(formStyles.inputWrong);
             this.makeAlert("Enter phone number!");
             return;
         }
+        numberInput.classList.remove(formStyles.inputWrong);
         if (!this.isNotUniqueName(nameInput.value)) {
             this.props.addContact(nameInput.value, numberInput.value);
             nameInput.value = "";
-            nameInput.classList.remove(formStyles.inputWrong);
             numberInput.value = "";
-            numberInput.classList.remove(formStyles.inputWrong);
         } else {
             this.makeAlert(`${nameInput.value} is already in contact list!`);
             nameInput.classList.add(formStyles.inputWrong);
@@ -37,10 +35,8 @@ class ContactForm extends React.Component {
         }
     };
     makeAlert = (text) => {
-        this.setState({
-            alert: text,
-        });
-        setTimeout(() => this.setState({ alert: "" }), 2000);
+        this.props.setAlert(text);
+        setTimeout(() => this.props.setAlert(""), 2000);
     };
     isNotUniqueName(name) {
         return this.props.contacts.some(
@@ -78,6 +74,7 @@ class ContactForm extends React.Component {
 
 ContactForm.propTypes = {
     addContact: PropTypes.func.isRequired,
+    setAlert: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state) => ({
     contacts: state.contacts.items,
@@ -85,6 +82,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     addContact: contactsActions.addContact,
+    setAlert: alertActions.alert,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);

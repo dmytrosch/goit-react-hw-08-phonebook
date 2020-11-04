@@ -1,5 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { CSSTransition } from "react-transition-group";
+import { connect } from "react-redux";
 
 const style = {
     width: "300px",
@@ -15,14 +17,24 @@ const style = {
     right: "10px",
 };
 
-export default function Alert({ text }) {
-    return (
+const Alert = ({ text }) => (
+    <CSSTransition
+        in={text ? true : false}
+        unmountOnExit
+        classNames="alert"
+        timeout={250}
+    >
         <div style={style}>
             <p>{text}</p>
         </div>
-    );
-}
+    </CSSTransition>
+);
 
 Alert.propTypes = {
     text: PropTypes.string.isRequired,
 };
+const mapStateToProps = (state) => ({
+    text: state.alert,
+});
+
+export default connect(mapStateToProps, null)(Alert);
