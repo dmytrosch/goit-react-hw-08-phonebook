@@ -20,28 +20,21 @@ export default class Phonebook extends React.Component {
         filter: "",
         alert: "",
     };
-    
-    
-    
+
     searchInputHandler = (event) => {
         this.setState({ filter: event.target.value });
     };
-    onDeleteBtnHandler = (event) => {
-        const contactId = event.target.dataset.id;
-        this.setState((prevState) => {
-            return {
-                contacts: prevState.contacts.filter(
-                    (contact) => contact.id !== contactId
-                ),
-            };
-        });
-    };
-    findContact() {
-        const { contacts, filter } = this.state;
-        return contacts.filter((contact) =>
-            contact.name.toLowerCase().includes(filter.toLowerCase())
-        );
-    }
+    // onDeleteBtnHandler = (event) => {
+    //     const contactId = event.target.dataset.id;
+    //     this.setState((prevState) => {
+    //         return {
+    //             contacts: prevState.contacts.filter(
+    //                 (contact) => contact.id !== contactId
+    //             ),
+    //         };
+    //     });
+    // };
+
     componentDidMount() {
         this.readContactsFromLocalStorage();
     }
@@ -79,16 +72,10 @@ export default class Phonebook extends React.Component {
                         >
                             <h1 className={styles.title}>Phonebook</h1>
                         </CSSTransition>
-                        <ContactForm/>
+                        <ContactForm />
                         <h2 className={styles.contacts}>Contacts</h2>
-                        {/* <Filter searchHandler={this.searchInputHandler} />
-                        <ContactList
-                            contacts={filter ? this.findContact() : contacts}
-                            deleteContact={this.onDeleteBtnHandler}
-                        />
-                        {filter && this.findContact().length === 0 && (
-                            <p>There's no such contact</p>
-                        )} */}
+                        <Filter />
+                        <ContactList />
                     </section>
                 </CSSTransition>
                 <CSSTransition

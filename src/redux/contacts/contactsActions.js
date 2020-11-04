@@ -15,4 +15,11 @@ const removeContact = (id) => ({
     },
 });
 
-export default {addContact, removeContact}
+const filter = (query) => ({
+    type: actionsTypes.FILTER_CONTACT,
+    payload: {
+        query,
+    },
+});
+
+export default { addContact, removeContact, filter };
