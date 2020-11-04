@@ -7,8 +7,10 @@ const initialContacts = [
 
 const readContactsFromLocalStorage = () => {
     const contactsString = localStorage.getItem("contacts");
-    const contactsArr = JSON.parse(contactsString);
-    return contactsArr.length > 0 ? contactsArr : initialContacts;
+    const contactsArr = contactsString
+        ? JSON.parse(contactsString)
+        : initialContacts;
+    return contactsArr;
 };
 const setContactsToLocalStorage = (contacts) => {
     localStorage.setItem("contacts", JSON.stringify(contacts));
