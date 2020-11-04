@@ -1,5 +1,4 @@
 import React from "react";
-import { v4 as uuidv4 } from "uuid";
 import { CSSTransition } from "react-transition-group";
 
 import ContactForm from "./ContactForm";
@@ -21,53 +20,9 @@ export default class Phonebook extends React.Component {
         filter: "",
         alert: "",
     };
-    isNotUniqueName(name) {
-        return this.state.contacts.some(
-            (contact) => contact.name.toLowerCase() === name.toLowerCase()
-        );
-    }
-    submitFormHandler = (event) => {
-        event.preventDefault();
-        const el = event.target.elements;
-        const nameInput = el.nameInput;
-        const numberInput = el.numberInput;
-        if (!nameInput.value) {
-            nameInput.classList.add(formStyles.inputWrong);
-            this.makeAlert("Enter name!");
-            return;
-        }
-        if (!numberInput.value) {
-            numberInput.classList.add(formStyles.inputWrong);
-            this.makeAlert("Enter phone number!");
-            return;
-        }
-        if (!this.isNotUniqueName(nameInput.value)) {
-            this.setState({
-                contacts: [
-                    ...this.state.contacts,
-                    {
-                        id: uuidv4(),
-                        name: nameInput.value,
-                        number: numberInput.value,
-                    },
-                ],
-            });
-            nameInput.value = "";
-            nameInput.classList.remove(formStyles.inputWrong);
-            numberInput.value = "";
-            numberInput.classList.remove(formStyles.inputWrong);
-        } else {
-            this.makeAlert(`${nameInput.value} is already in contact list!`);
-            nameInput.classList.add(formStyles.inputWrong);
-            nameInput.value = "";
-        }
-    };
-    makeAlert = (text) => {
-        this.setState({
-            alert: text,
-        });
-        setTimeout(() => this.setState({ alert: "" }), 2000);
-    };
+    
+    
+    
     searchInputHandler = (event) => {
         this.setState({ filter: event.target.value });
     };
@@ -124,16 +79,16 @@ export default class Phonebook extends React.Component {
                         >
                             <h1 className={styles.title}>Phonebook</h1>
                         </CSSTransition>
-                        <ContactForm handler={this.submitFormHandler} />
+                        <ContactForm/>
                         <h2 className={styles.contacts}>Contacts</h2>
-                        <Filter searchHandler={this.searchInputHandler} />
+                        {/* <Filter searchHandler={this.searchInputHandler} />
                         <ContactList
                             contacts={filter ? this.findContact() : contacts}
                             deleteContact={this.onDeleteBtnHandler}
                         />
                         {filter && this.findContact().length === 0 && (
                             <p>There's no such contact</p>
-                        )}
+                        )} */}
                     </section>
                 </CSSTransition>
                 <CSSTransition

@@ -1,7 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Phonebook from "./components/App";
+import App from "./components/App";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
 import "./style.css";
 
-ReactDOM.render(<Phonebook />, document.querySelector("#root"));
+ReactDOM.render(
+    <Provider store={store}>
+        <App />
+    </Provider>,
+    document.querySelector("#root")
+);
