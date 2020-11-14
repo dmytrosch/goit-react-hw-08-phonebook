@@ -1,34 +1,28 @@
 import { createAction } from "@reduxjs/toolkit";
 
-const addContact = createAction("contact/add", (name, number) => ({
-    payload: {
-        name,
-        number,
-    },
-}));
-const removeContact = createAction("contact/remove");
 const filter = createAction("contact/filter");
 
-// const addContact = (name, number) => ({
-//     type: actionsTypes.ADD_CONTACT,
-//     payload: {
-//         name,
-//         number,
-//     },
-// });
+const addContactStart = createAction("contacts/addStart");
+const addContactSuccess = createAction("contacts/addSuccess");
+const addContactsError = createAction("contacts/addError");
 
-// const removeContact = (id) => ({
-//     type: actionsTypes.REMOVE_CONTACT,
-//     payload: {
-//         id,
-//     },
-// });
+const removeContactStart = createAction("contacts/removeStart");
+const removeContactSuccess = createAction("contacts/removeSuccess");
+const removeContactError = createAction("contact/removeError");
 
-// const filter = (query) => ({
-//     type: actionsTypes.FILTER_CONTACT,
-//     payload: {
-//         query,
-//     },
-// });
+const getContactsStart = createAction("contacts/getStart");
+const getContactsSuccess = createAction("contacts/getSuccess");
+const getContactsError = createAction("contacts/getError");
 
-export default { addContact, removeContact, filter };
+export default {
+    getContactsStart,
+    getContactsSuccess,
+    getContactsError,
+    addContactStart,
+    addContactSuccess,
+    addContactsError,
+    removeContactStart,
+    removeContactSuccess,
+    removeContactError,
+    filter,
+};

@@ -1,16 +1,19 @@
 import React from "react";
 import { CSSTransition } from "react-transition-group";
+import { connect } from "react-redux";
 
 import ContactForm from "./ContactForm";
 import Filter from "./Filter";
 import ContactList from "./ContactList";
 import Alert from "./Alert";
 import styles from "./App.module.css";
+import loadingSelectors from "../redux/loading/loadingSelectors";
 import "./animation.css";
 
-export default function Phonebook() {
+function Phonebook(props) {
     return (
         <>
+            {props.loading && <p>loading...</p>}
             <CSSTransition
                 in={true}
                 appear={true}
@@ -38,3 +41,7 @@ export default function Phonebook() {
         </>
     );
 }
+const mapStateToProps = (state) => ({
+    loading: loadingSelectors.isLoading(state),
+});
+export default connect(mapStateToProps)(Phonebook);

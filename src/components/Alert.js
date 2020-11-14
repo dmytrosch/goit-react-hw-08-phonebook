@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { CSSTransition } from "react-transition-group";
 import { connect } from "react-redux";
+import alertSelectors from '../redux/alert/alertSelectors';
 
 const style = {
     width: "300px",
@@ -34,7 +35,7 @@ Alert.propTypes = {
     text: PropTypes.string.isRequired,
 };
 const mapStateToProps = (state) => ({
-    text: state.alert,
+    text: alertSelectors.getAlertText(state),
 });
 
 export default connect(mapStateToProps, null)(Alert);

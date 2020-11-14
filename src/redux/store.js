@@ -1,12 +1,14 @@
 // import { createStore, combineReducers } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
-import contactReducer from "./contacts/contactsReducers";
+import contactsReducer from "./contacts/contactsReducers";
+import loadingReducer from "./loading/loadingReducer";
 import alertReducer from "./alert/alertReducer";
 
 const store = configureStore({
     reducer: {
-        contacts: contactReducer,
+        contacts: contactsReducer,
         alert: alertReducer,
+        loading: loadingReducer,
     },
 });
 

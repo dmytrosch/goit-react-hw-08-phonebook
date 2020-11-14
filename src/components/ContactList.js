@@ -3,19 +3,25 @@ import PropTypes from "prop-types";
 import styles from "./ContactList.module.css";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { connect } from "react-redux";
+import contactsOperations from "../redux/contacts/contactsOperations";
+import contactsSelectors from "../redux/contacts/contactsSelectors";
 
 import ContactItem from "./ContactItem";
 
 class ContactList extends React.Component {
-    findContact() {
-        const { contacts, filter } = this.props;
-        return contacts.filter((contact) =>
-            contact.name.toLowerCase().includes(filter.toLowerCase())
-        );
+    componentDidMount() {
+        this.props.onFetchContacts();
     }
+
+    // findContact() {
+    //     const { contacts, filter } = this.props;
+    //     return contacts.filter((contact) =>
+    //         contact.name.toLowerCase().includes(filter.toLowerCase())
+    //     );
+    // }
     render() {
-        const {contacts, filter } = this.props;
-        const contactsToRender = filter ? this.findContact() : contacts;
+        const { contacts, filter, filteredContacts } = this.props;
+        const contactsToRender = filter ? filteredContacts : contacts;
         return (
             <>
                 <TransitionGroup className={styles.list} component="ul">
@@ -25,11 +31,11 @@ class ContactList extends React.Component {
                             timeout={250}
                             classNames="contact-item"
                         >
-                            <ContactItem id={contact.id}/>
+                            <ContactItem id={contact.id} />
                         </CSSTransition>
                     ))}
                 </TransitionGroup>
-                {filter && this.findContact().length === 0 && (
+                {filter && filteredContacts.length === 0 && (
                     <p>There's no such contact</p>
                 )}{" "}
             </>
@@ -46,8 +52,12 @@ ContactList.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    contacts: state.contacts.items,
-    filter: state.contacts.filter,
+    contacts: contactsSelectors.getAllContacts(state),
+    filter: contactsSelectors.getFilterParam(state),
+    filteredContacts: contactsSelectors.getFilteredContacts(state),
 });
+const mapDispatchToProps = {
+    onFetchContacts: contactsOperations.getAllContacts,
+};
 
-export default connect(mapStateToProps, null)(ContactList);
+export default connect(mapStateToProps, mapDispatchToProps)(ContactList);

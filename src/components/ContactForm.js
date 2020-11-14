@@ -1,10 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styles from "./ContactForm.module.css";
-import contactsActions from "../redux/contacts/contactsActions";
 import alertActions from "../redux/alert/alertActions";
 import { connect } from "react-redux";
 import formStyles from "./ContactForm.module.css";
+import contactsOperations from "../redux/contacts/contactsOperations";
+import contactsSelectors from '../redux/contacts/contactsSelectors';
 
 class ContactForm extends React.Component {
     submitFormHandler = (event) => {
@@ -77,11 +78,11 @@ ContactForm.propTypes = {
     setAlert: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state) => ({
-    contacts: state.contacts.items,
+    contacts: contactsSelectors.getAllContacts(state),
 });
 
 const mapDispatchToProps = {
-    addContact: contactsActions.addContact,
+    addContact: contactsOperations.addContact,
     setAlert: alertActions.alert,
 };
 
