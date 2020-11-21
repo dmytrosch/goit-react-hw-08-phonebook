@@ -1,19 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { CSSTransition } from "react-transition-group";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import ContactForm from "./ContactForm";
 import Filter from "./Filter";
 import ContactList from "./ContactList";
 import Alert from "./Alert";
+import Signup from "./Signup";
+import Login from "./Login";
+import UserMenu from "./UserMenu";
 import styles from "./App.module.css";
 import loadingSelectors from "../redux/loading/loadingSelectors";
+import { authOperations, authSelectors } from "../redux/auth/";
 import "./animation.css";
 
-function Phonebook(props) {
+function Phonebook() {
+    const isAuthenticated = useSelector((state) =>
+        authSelectors.isAuthenticated(state)
+    );
+    const loading = useSelector((state) => loadingSelectors.isLoading(state));
+    const dispatch = useDispatch();
+    useEffect(() => {
+        if (isAuthenticated) {
+            dispatch(authOperations.getCurrentUser());
+        }
+    }, []);
     return (
         <>
-            {props.loading && <p>loading...</p>}
+            {loading && <p>loading...</p>}
             <CSSTransition
                 in={true}
                 appear={true}
@@ -31,7 +45,10 @@ function Phonebook(props) {
                     >
                         <h1 className={styles.title}>Phonebook</h1>
                     </CSSTransition>
-                    <ContactForm />
+                    <UserMenu />
+                    <Login />
+                    {/* <Signup/> */}
+                    {/* <ContactForm /> */}
                     <h2 className={styles.contacts}>Contacts</h2>
                     <Filter />
                     <ContactList />
@@ -41,7 +58,5 @@ function Phonebook(props) {
         </>
     );
 }
-const mapStateToProps = (state) => ({
-    loading: loadingSelectors.isLoading(state),
-});
-export default connect(mapStateToProps)(Phonebook);
+
+export default Phonebook;

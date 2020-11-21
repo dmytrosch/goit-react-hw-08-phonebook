@@ -9,9 +9,12 @@ import contactsSelectors from "../redux/contacts/contactsSelectors";
 import ContactItem from "./ContactItem";
 
 class ContactList extends React.Component {
-    componentDidMount() {
-        this.props.onFetchContacts();
-    }
+    // componentDidMount() {
+    //     if(this.props.isAuthenticated){
+    //         this.props.history.replace('/login')
+    //     }
+    //     this.props.onFetchContacts();
+    // }
 
     // findContact() {
     //     const { contacts, filter } = this.props;
@@ -55,6 +58,7 @@ const mapStateToProps = (state) => ({
     contacts: contactsSelectors.getAllContacts(state),
     filter: contactsSelectors.getFilterParam(state),
     filteredContacts: contactsSelectors.getFilteredContacts(state),
+    // isAuthenticated: 
 });
 const mapDispatchToProps = {
     onFetchContacts: contactsOperations.getAllContacts,
