@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styles from "./ContactForm.module.css";
-import contactsActions from "../redux/contacts/contactsActions";
+import contactsActions from "../../redux/contacts/contactsActions";
 import { connect } from "react-redux";
 
 function Filter(props) {

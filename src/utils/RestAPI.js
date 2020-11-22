@@ -15,26 +15,23 @@ const logout = () => {
     return axios.post("/users/logout");
 };
 
-// const fetchAllContacts = () => (dispatch) => {
-//     dispatch(contactsActions.getContactsStart());
-//     axios
-//         .get(BASE_URL)
-//         .then((resp) => dispatch(contactsActions.getContactsSuccess(resp.data)))
-//         .catch((error) => dispatch(contactsActions.getContactsError(error)));
-// };
-// const addContact = (name, number) => (dispatch) => {
-//     dispatch(contactsActions.addContactStart());
-//     axios
-//         .post(BASE_URL, { name, number })
-//         .then((resp) => resp.data)
-//         .then((data) => dispatch(contactsActions.addContactSuccess(data)))
-//         .catch((error) => dispatch(contactsActions.addContactError(error)));
-// };
-// const removeContact = (id) => (dispatch) => {
-//     dispatch(contactsActions.removeContactStart());
-//     axios
-//         .delete(BASE_URL + `/${id}`)
-//         .then(dispatch(contactsActions.removeContactSuccess(id)));
-// };
+const fetchAllContacts = () => {
+    return axios.get("/contacts");
+};
+const addContact = (name, number) => {
+    return axios.post("/contacts", { name, number });
+};
+const removeContact = (id) => {
+    console.log(id);
+    return axios.delete("/contacts/" + id);
+};
 
-export default { register, login, getCurrentUser, logout };
+export default {
+    removeContact,
+    addContact,
+    fetchAllContacts,
+    register,
+    login,
+    getCurrentUser,
+    logout,
+};

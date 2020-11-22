@@ -1,28 +1,32 @@
-import axios from "axios";
+import RestAPI from "../../utils/RestAPI";
 import contactsActions from "./contactsActions";
-
-const BASE_URL = "http://localhost:5252/contacts";
+import alertOperations from "../alert/alertOperations";
 
 const getAllContacts = () => (dispatch) => {
     dispatch(contactsActions.getContactsStart());
-    axios
-        .get(BASE_URL)
+    RestAPI.fetchAllContacts()
         .then((resp) => dispatch(contactsActions.getContactsSuccess(resp.data)))
-        .catch((error) => dispatch(contactsActions.getContactsError(error)));
+        .catch(() =>
+            dispatch(alertOperations.makeAlert("Oops! Something went wrong!"))
+        );
 };
 const addContact = (name, number) => (dispatch) => {
     dispatch(contactsActions.addContactStart());
-    axios
-        .post(BASE_URL, { name, number })
+    RestAPI.addContact(name, number)
         .then((resp) => resp.data)
         .then((data) => dispatch(contactsActions.addContactSuccess(data)))
-        .catch((error) => dispatch(contactsActions.addContactError(error)));
+        .catch(() =>
+            dispatch(alertOperations.makeAlert("Oops! Something went wrong!"))
+        );
 };
 const removeContact = (id) => (dispatch) => {
     dispatch(contactsActions.removeContactStart());
-    axios
-        .delete(BASE_URL+`/${id}`)
-        .then(dispatch(contactsActions.removeContactSuccess(id)));
+    RestAPI.removeContact(id)
+    .then(() =>
+        dispatch(contactsActions.removeContactSuccess(id)))
+    .catch(() =>
+        dispatch(alertOperations.makeAlert("Oops! Something went wrong!")))
+    
 };
 
 export default { getAllContacts, addContact, removeContact };

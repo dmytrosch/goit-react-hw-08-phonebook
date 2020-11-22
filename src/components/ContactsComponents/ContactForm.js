@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styles from "./ContactForm.module.css";
-import alertActions from "../redux/alert/alertActions";
+import alertOperations from "../../redux/alert/alertOperations";
 import { connect } from "react-redux";
 import formStyles from "./ContactForm.module.css";
-import contactsOperations from "../redux/contacts/contactsOperations";
-import contactsSelectors from '../redux/contacts/contactsSelectors';
+import contactsOperations from "../../redux/contacts/contactsOperations";
+import contactsSelectors from '../../redux/contacts/contactsSelectors';
 
 class ContactForm extends React.Component {
     submitFormHandler = (event) => {
@@ -15,13 +15,13 @@ class ContactForm extends React.Component {
         const numberInput = el.numberInput;
         if (!nameInput.value) {
             nameInput.classList.add(formStyles.inputWrong);
-            this.makeAlert("Enter name!");
+            this.props.setAlert("Enter name!");
             return;
         }
         nameInput.classList.remove(formStyles.inputWrong);
         if (!numberInput.value) {
             numberInput.classList.add(formStyles.inputWrong);
-            this.makeAlert("Enter phone number!");
+            this.props.setAlert("Enter phone number!");
             return;
         }
         numberInput.classList.remove(formStyles.inputWrong);
@@ -30,14 +30,10 @@ class ContactForm extends React.Component {
             nameInput.value = "";
             numberInput.value = "";
         } else {
-            this.makeAlert(`${nameInput.value} is already in contact list!`);
+            this.props.setAlert(`${nameInput.value} is already in contact list!`);
             nameInput.classList.add(formStyles.inputWrong);
             nameInput.value = "";
         }
-    };
-    makeAlert = (text) => {
-        this.props.setAlert(text);
-        setTimeout(() => this.props.setAlert(""), 2000);
     };
     isNotUniqueName(name) {
         return this.props.contacts.some(
@@ -83,7 +79,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     addContact: contactsOperations.addContact,
-    setAlert: alertActions.alert,
+    setAlert: alertOperations.makeAlert,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);

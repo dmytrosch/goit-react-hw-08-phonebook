@@ -2,10 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import { CSSTransition } from "react-transition-group";
 import { connect } from "react-redux";
-import alertSelectors from '../redux/alert/alertSelectors';
+import alertSelectors from "../redux/alert/alertSelectors";
 
 const style = {
-    width: "300px",
+    minWidth: "300px",
+    paddingLeft: "5px",
+    paddingRight: "5px",
     height: "55px",
     display: "flex",
     justifyContent: "center",

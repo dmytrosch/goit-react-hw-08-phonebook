@@ -1,10 +1,10 @@
 import RestAPI from "../../utils/RestAPI";
 import axios from "axios";
 import authActions from "./authActions";
+import alertOperations from "../alert/alertOperations";
 
 const token = {
     set(tokenValue) {
-        console.log(axios);
         axios.defaults.headers.common.Authorization = `Bearer ${tokenValue}`;
     },
     unset() {
@@ -19,7 +19,9 @@ const registerUser = (credentials) => (dispatch) => {
             token.set(response.data.token);
             dispatch(authActions.registerSuccess(response.data));
         })
-        .catch((error) => dispatch(authActions.registerError(error.message)));
+        .catch(() =>
+            dispatch(alertOperations.makeAlert("Oops! Something went wrong!"))
+        );
 };
 const loginUser = (credentials) => (dispatch) => {
     dispatch(authActions.loginStart());
@@ -28,7 +30,15 @@ const loginUser = (credentials) => (dispatch) => {
             token.set(response.data.token);
             dispatch(authActions.loginSuccess(response.data));
         })
-        .catch((error) => dispatch(authActions.loginError(error.message)));
+        .catch((error) =>
+            dispatch(
+                alertOperations.makeAlert(
+                    error.response.status === 400
+                        ? "Check your email or password and try login again"
+                        : "Oops! Something went wrong"
+                )
+            )
+        );
 };
 const getCurrentUser = () => (dispatch, getState) => {
     dispatch(authActions.getCurrentUserStart());
@@ -41,8 +51,8 @@ const getCurrentUser = () => (dispatch, getState) => {
         .then((response) =>
             dispatch(authActions.getCurrentUserSuccess(response.data))
         )
-        .catch((error) =>
-            dispatch(authActions.getCurrentUserError(error.message))
+        .catch(() =>
+            dispatch(alertOperations.makeAlert("Oops! Something went wrong!"))
         );
 };
 const logout = () => (dispatch) => {
@@ -52,7 +62,9 @@ const logout = () => (dispatch) => {
             token.unset();
             dispatch(authActions.logoutSuccess());
         })
-        .catch((error) => dispatch(authActions.logoutError(error)));
+        .catch(() =>
+            dispatch(alertOperations.makeAlert("Oops! Something went wrong!"))
+        );
 };
 
 export default { registerUser, loginUser, getCurrentUser, logout };

@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./ContactList.module.css";
 import { connect } from "react-redux";
-import contactsOperations from "../redux/contacts/contactsOperations";
-import contactsSelectors from "../redux/contacts/contactsSelectors";
+import contactsOperations from "../../redux/contacts/contactsOperations";
+import contactsSelectors from "../../redux/contacts/contactsSelectors";
 
 function ContactItem({ deleteContact, name, number }) {
     return (

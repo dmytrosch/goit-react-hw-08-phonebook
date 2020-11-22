@@ -1,18 +1,25 @@
-import React, { useEffect } from "react";
+import React, { useEffect, Suspense, lazy } from "react";
+import { BrowserRouter, Redirect, Switch } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 import { useSelector, useDispatch } from "react-redux";
 
-import ContactForm from "./ContactForm";
-import Filter from "./Filter";
-import ContactList from "./ContactList";
+import Loader from "./Loader";
+import Layout from "./Layout";
 import Alert from "./Alert";
-import Signup from "./Signup";
-import Login from "./Login";
-import UserMenu from "./UserMenu";
-import styles from "./App.module.css";
+import PrivateRoute from "./RouteComponents/PrivateRoute";
+import PublicRoute from "./RouteComponents/PublicRoute";
+
 import loadingSelectors from "../redux/loading/loadingSelectors";
 import { authOperations, authSelectors } from "../redux/auth/";
 import "./animation.css";
+
+const AsyncLogin = lazy(() => import("./AuthComponents/Login"));
+const AsyncSignup = lazy(() => import("./AuthComponents/Signup"));
+const AsyncContacts = lazy(() => import("./ContactsComponents/Contacts"));
+
+const semiTransparentStyle = {
+    opacity: "0.5",
+};
 
 function Phonebook() {
     const isAuthenticated = useSelector((state) =>
@@ -26,8 +33,7 @@ function Phonebook() {
         }
     }, []);
     return (
-        <>
-            {loading && <p>loading...</p>}
+        <BrowserRouter>
             <CSSTransition
                 in={true}
                 appear={true}
@@ -35,27 +41,34 @@ function Phonebook() {
                 timeout={250}
                 classNames="container"
             >
-                <section className={styles.container}>
-                    <CSSTransition
-                        in={true}
-                        appear={true}
-                        timeout={725}
-                        unmountOnExit={true}
-                        classNames="title"
-                    >
-                        <h1 className={styles.title}>Phonebook</h1>
-                    </CSSTransition>
-                    <UserMenu />
-                    <Login />
-                    {/* <Signup/> */}
-                    {/* <ContactForm /> */}
-                    <h2 className={styles.contacts}>Contacts</h2>
-                    <Filter />
-                    <ContactList />
-                </section>
+                <Layout styling={loading? semiTransparentStyle : {}}>
+                    <Suspense fallback={<Loader />}>
+                        <Switch>
+                            <PublicRoute
+                                path="/login"
+                                exact
+                                restricted={true}
+                                component={AsyncLogin}
+                            />
+                            <PublicRoute
+                                path="/signup"
+                                exact
+                                restricted={true}
+                                component={AsyncSignup}
+                            />
+                            <PrivateRoute
+                                path="/contacts"
+                                exact
+                                component={AsyncContacts}
+                            />
+                            <Redirect to="/contacts" />
+                        </Switch>
+                    </Suspense>
+                </Layout>
             </CSSTransition>
             <Alert />
-        </>
+            {loading && <Loader />}
+        </BrowserRouter>
     );
 }
 

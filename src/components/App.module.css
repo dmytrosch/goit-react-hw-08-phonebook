@@ -4,15 +4,25 @@
     max-width: 500px;
 }
 
-.title{
+.title {
     font-size: 25px;
-    color: rgb(73, 73, 184);
+    color: #4949b8;
+}
+.header {
     margin-bottom: 15px;
     border-bottom: 1px solid grey;
+    display: flex;
+    justify-content: space-between;
 }
-.contacts{
+
+.login,
+.signup,
+.contacts {
     font-size: 20px;
     color: #2b2525;
-    border-bottom: 1px solid grey;
     margin-bottom: 15px;
+}
+
+.contacts {
+    border-bottom: 1px solid grey;
 }

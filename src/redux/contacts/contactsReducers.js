@@ -4,7 +4,6 @@ import contactsActions from "./contactsActions";
 
 const addContact = (state, action) => {
     const contacts = [...state, action.payload];
-
     return contacts;
 };
 const removeContact = (state, action) => {
