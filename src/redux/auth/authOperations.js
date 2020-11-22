@@ -1,6 +1,6 @@
 import RestAPI from "../../utils/RestAPI";
 import axios from "axios";
-import authActions from "./authActions";
+import { authActions } from "./index";
 import alertOperations from "../alert/alertOperations";
 
 const token = {
