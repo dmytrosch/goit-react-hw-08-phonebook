@@ -34,15 +34,15 @@ function Phonebook() {
     }, []);
     return (
         <BrowserRouter>
-            <CSSTransition
-                in={true}
-                appear={true}
-                unmountOnExit
-                timeout={250}
-                classNames="container"
-            >
-                <Layout styling={loading? semiTransparentStyle : {}}>
-                    <Suspense fallback={<Loader />}>
+            <Suspense fallback={<Loader />}>
+                <CSSTransition
+                    in={true}
+                    appear={true}
+                    unmountOnExit
+                    timeout={250}
+                    classNames="container"
+                >
+                    <Layout styling={loading ? semiTransparentStyle : {}}>
                         <Switch>
                             <PublicRoute
                                 path="/login"
@@ -63,11 +63,11 @@ function Phonebook() {
                             />
                             <Redirect to="/contacts" />
                         </Switch>
-                    </Suspense>
-                </Layout>
-            </CSSTransition>
-            <Alert />
-            {loading && <Loader />}
+                    </Layout>
+                </CSSTransition>
+                <Alert />
+                {loading && <Loader />}
+            </Suspense>
         </BrowserRouter>
     );
 }

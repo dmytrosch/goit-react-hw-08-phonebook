@@ -53,10 +53,9 @@ class Login extends React.Component {
                         />
                     </label>
                     <button className={formStyles.submit} type="submit">
-                        Signup!
+                        Login
                     </button>
                 </form>
-                {/* {name && <p>{`${name}, you've successed registered!`}</p>} */}
             </div>
         );
     }
