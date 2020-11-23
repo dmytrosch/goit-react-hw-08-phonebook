@@ -19,9 +19,10 @@ const registerUser = (credentials) => (dispatch) => {
             token.set(response.data.token);
             dispatch(authActions.registerSuccess(response.data));
         })
-        .catch(() =>
-            dispatch(alertOperations.makeAlert("Oops! Something went wrong!"))
-        );
+        .catch(() => {
+            dispatch(authActions.registerError());
+            dispatch(alertOperations.makeAlert("Oops! Something went wrong!"));
+        });
 };
 const loginUser = (credentials) => (dispatch) => {
     dispatch(authActions.loginStart());
@@ -30,15 +31,16 @@ const loginUser = (credentials) => (dispatch) => {
             token.set(response.data.token);
             dispatch(authActions.loginSuccess(response.data));
         })
-        .catch((error) =>
+        .catch((error) => {
+            dispatch(authActions.loginError());
             dispatch(
                 alertOperations.makeAlert(
                     error.response.status === 400
                         ? "Check your email or password and try login again"
                         : "Oops! Something went wrong"
                 )
-            )
-        );
+            );
+        });
 };
 const getCurrentUser = () => (dispatch, getState) => {
     dispatch(authActions.getCurrentUserStart());
@@ -51,9 +53,10 @@ const getCurrentUser = () => (dispatch, getState) => {
         .then((response) =>
             dispatch(authActions.getCurrentUserSuccess(response.data))
         )
-        .catch(() =>
-            dispatch(alertOperations.makeAlert("Oops! Something went wrong!"))
-        );
+        .catch(() => {
+            dispatch(authActions.getCurrentUserError());
+            dispatch(alertOperations.makeAlert("Oops! Something went wrong!"));
+        });
 };
 const logout = () => (dispatch) => {
     dispatch(authActions.logoutStart());
@@ -62,9 +65,10 @@ const logout = () => (dispatch) => {
             token.unset();
             dispatch(authActions.logoutSuccess());
         })
-        .catch(() =>
-            dispatch(alertOperations.makeAlert("Oops! Something went wrong!"))
-        );
+        .catch(() => {
+            dispatch(authActions.logoutError());
+            dispatch(alertOperations.makeAlert("Oops! Something went wrong!"));
+        });
 };
 
 export default { registerUser, loginUser, getCurrentUser, logout };
