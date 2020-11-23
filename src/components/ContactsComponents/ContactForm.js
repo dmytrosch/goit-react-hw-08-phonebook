@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import styles from "./ContactForm.module.css";
+import styles from "../App.module.css";
 import alertOperations from "../../redux/alert/alertOperations";
 import { connect } from "react-redux";
 import formStyles from "./ContactForm.module.css";
@@ -46,26 +46,26 @@ class ContactForm extends React.Component {
         return (
             <>
                 <h3 className={styles.add}>Add contact</h3>
-                <form onSubmit={this.submitFormHandler} className={styles.form}>
-                    <label className={styles.label}>
+                <form onSubmit={this.submitFormHandler} className={formStyles.form}>
+                    <label className={formStyles.label}>
                         Name <br />
                         <input
                             type="text"
                             name="nameInput"
-                            className={styles.input}
+                            className={formStyles.input}
                         />
                     </label>
-                    <label className={styles.label}>
+                    <label className={formStyles.label}>
                         Number <br />
                         <input
                             type="tel"
                             id="phone"
                             name="numberInput"
-                            className={styles.input}
+                            className={formStyles.input}
                             autoComplete="off"
                         />
                     </label>
-                    <button type="submit" className={styles.submit}>
+                    <button type="submit" className={formStyles.submit}>
                         Add contact
                     </button>
                 </form>
