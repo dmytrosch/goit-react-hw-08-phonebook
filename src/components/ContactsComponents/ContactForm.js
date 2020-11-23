@@ -5,7 +5,7 @@ import alertOperations from "../../redux/alert/alertOperations";
 import { connect } from "react-redux";
 import formStyles from "./ContactForm.module.css";
 import contactsOperations from "../../redux/contacts/contactsOperations";
-import contactsSelectors from '../../redux/contacts/contactsSelectors';
+import contactsSelectors from "../../redux/contacts/contactsSelectors";
 
 class ContactForm extends React.Component {
     submitFormHandler = (event) => {
@@ -30,7 +30,9 @@ class ContactForm extends React.Component {
             nameInput.value = "";
             numberInput.value = "";
         } else {
-            this.props.setAlert(`${nameInput.value} is already in contact list!`);
+            this.props.setAlert(
+                `${nameInput.value} is already in contact list!`
+            );
             nameInput.classList.add(formStyles.inputWrong);
             nameInput.value = "";
         }
@@ -42,29 +44,32 @@ class ContactForm extends React.Component {
     }
     render() {
         return (
-            <form onSubmit={this.submitFormHandler} className={styles.form}>
-                <label className={styles.label}>
-                    Name <br />
-                    <input
-                        type="text"
-                        name="nameInput"
-                        className={styles.input}
-                    />
-                </label>
-                <label className={styles.label}>
-                    Number <br />
-                    <input
-                        type="tel"
-                        id="phone"
-                        name="numberInput"
-                        className={styles.input}
-                        autoComplete="off"
-                    />
-                </label>
-                <button type="submit" className={styles.submit}>
-                    Add contact
-                </button>
-            </form>
+            <>
+                <h3 className={styles.add}>Add contact</h3>
+                <form onSubmit={this.submitFormHandler} className={styles.form}>
+                    <label className={styles.label}>
+                        Name <br />
+                        <input
+                            type="text"
+                            name="nameInput"
+                            className={styles.input}
+                        />
+                    </label>
+                    <label className={styles.label}>
+                        Number <br />
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="numberInput"
+                            className={styles.input}
+                            autoComplete="off"
+                        />
+                    </label>
+                    <button type="submit" className={styles.submit}>
+                        Add contact
+                    </button>
+                </form>
+            </>
         );
     }
 }

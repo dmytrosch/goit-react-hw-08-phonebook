@@ -31,7 +31,7 @@ class Login extends React.Component {
     render() {
         return (
             <div>
-                <h3 className={styles.login}>Login here to use phonebook </h3>
+                <h3 className={styles.login}>Log here to use phonebook </h3>
                 <form
                     className={formStyles.form}
                     onSubmit={this.onSubmitHandler}

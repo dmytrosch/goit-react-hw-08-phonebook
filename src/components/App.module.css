@@ -17,7 +17,8 @@
 
 .login,
 .signup,
-.contacts {
+.contacts,
+.add {
     font-size: 20px;
     color: #2b2525;
     margin-bottom: 15px;
